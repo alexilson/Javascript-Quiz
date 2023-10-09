@@ -3,15 +3,27 @@ const countEl = document.querySelector("#count");
 let gameState = false;
 
 
+const questionSet = {
+    questions: {
+        
+    }
+}
+
+function displayQuestion() {
+    
+}
+
+
 function displayCount(current_count) {
-    console.log(current_count);
+    // console.log(current_count);
     countEl.innerHTML = "Time: " + current_count + " seconds"; 
 }
 
 
 function startTimer() {
-    let count = 0.000;
-    setInterval(
+    gameState = true;
+    let count = 0;
+    intervalId = setInterval(
         function() {
             displayCount(count);
             ++count;
@@ -20,10 +32,21 @@ function startTimer() {
 }
 
 
+function stopTimer() {
+    gameState = false;
+    clearInterval(intervalId); // got this from Xpert AI
+    let count = 0;
+    displayCount(count);
+}
+
+
 startBtn.addEventListener('click', function() {
     if (gameState == false) {
-        gameState = true;
         startTimer();
+        displayQuestion();
+    }
+    else if (gameState == true) {
+        stopTimer();
     }
 })
 
