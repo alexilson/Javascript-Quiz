@@ -1,7 +1,8 @@
 const startBtn = document.querySelector("#start_button");
+const submitBtn = document.querySelector("#submit_button");
 const countEl = document.querySelector("#count");
 const questionTitle = document.querySelector("#question_title");
-// const questionText = document.querySelector("#question_text");
+const questionText = document.querySelector("#question_text");
 // const questionForm = document.querySelector("#question_form");
 let gameState = false;
 
@@ -58,9 +59,10 @@ answerSet:
     ["a", "d", "a", "a", "a"]
 }
 
+
 function displayQuestion() {
     questionTitle.textContent = questionSet.questions['1'].title;
-
+    questionText.textContent = questionSet.questions['2'].text;
 //     for (let i = 1; i = Object.keys(questionSet.questions).length; ++i) {
 //     questionTitle.textContent = "Hello"; //questionSet.questions.i.title.value;
 // }
@@ -103,6 +105,3 @@ startBtn.addEventListener('click', function() {
         startBtn.innerHTML = "Start Game";
     }
 })
-
-// I could move all this to a function called startGame where it changes the gamestate, starts the timer, and
-// changes the button text to read Stop Timer.
