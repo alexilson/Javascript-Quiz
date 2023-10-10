@@ -61,8 +61,12 @@ answerSet:
 
 
 function displayQuestion() {
-    questionTitle.textContent = questionSet.questions['1'].title;
-    questionText.textContent = questionSet.questions['2'].text;
+    for (let questionId in questionSet.questions) {
+        questionTitle.textContent = questionSet.questions[questionId].title;
+        questionText.textContent = questionSet.questions[questionId].text;
+        
+    }
+
 //     for (let i = 1; i = Object.keys(questionSet.questions).length; ++i) {
 //     questionTitle.textContent = "Hello"; //questionSet.questions.i.title.value;
 // }
@@ -75,11 +79,11 @@ function displayCount(current_count) {
 
 
 function startTimer() {
-    let count = 1;
+    let count = 100;
     intervalId = setInterval(
         function() {
             displayCount(count);
-            ++count;
+            --count;
         },
     1000);
 }
@@ -93,7 +97,9 @@ function stopTimer() {
 }
 
 
-startBtn.addEventListener('click', function() {
+startBtn.addEventListener('click', function(event_this) {
+    event_this.stopPropagation();
+    event_this.preventDefault();
     if (gameState == false) {
         gameState = true;
         startTimer(); // starts the timer
@@ -104,4 +110,10 @@ startBtn.addEventListener('click', function() {
         stopTimer();
         startBtn.innerHTML = "Start Game";
     }
+})
+
+submitBtn.addEventListener('click', function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+    alert("It works");
 })
