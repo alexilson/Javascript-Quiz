@@ -3,7 +3,11 @@ const submitBtn = document.querySelector("#submit_button");
 const countEl = document.querySelector("#count");
 const questionTitle = document.querySelector("#question_title");
 const questionText = document.querySelector("#question_text");
-// const questionForm = document.querySelector("#question_form");
+const questionForm = document.querySelector("#question_form");
+const answerLabelA = document.querySelector("#answer_a_label")
+const answerLabelB = document.querySelector("#answer_b_label")
+const answerLabelC = document.querySelector("#answer_c_label")
+const answerLabelD = document.querySelector("#answer_d_label")
 let gameState = false;
 
 
@@ -64,12 +68,11 @@ function displayQuestion() {
     for (let questionId in questionSet.questions) {
         questionTitle.textContent = questionSet.questions[questionId].title;
         questionText.textContent = questionSet.questions[questionId].text;
-        
+        answerLabelA.textContent = questionSet.questions[questionId].a;
+        answerLabelB.textContent = questionSet.questions[questionId].b;
+        answerLabelC.textContent = questionSet.questions[questionId].c;
+        answerLabelD.textContent = questionSet.questions[questionId].d;
     }
-
-//     for (let i = 1; i = Object.keys(questionSet.questions).length; ++i) {
-//     questionTitle.textContent = "Hello"; //questionSet.questions.i.title.value;
-// }
 }
 
 
@@ -99,7 +102,7 @@ function stopTimer() {
 
 startBtn.addEventListener('click', function(event_this) {
     event_this.stopPropagation();
-    event_this.preventDefault();
+    // event_this.preventDefault();
     if (gameState == false) {
         gameState = true;
         startTimer(); // starts the timer
