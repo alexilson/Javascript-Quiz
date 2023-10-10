@@ -29,7 +29,7 @@ const questionSet = {
 
             3: {
                 title: "Question 3:",
-                text:  "What does the "===" operator in JavaScript do?",
+                text:  "What does the \"===\" operator in JavaScript do?",
                 a: "a) Compares two values for equality, without type conversion",
                 b: "b) Assigns a value to a variable",
                 c: "c) Performs a mathematical operation",
@@ -59,6 +59,8 @@ answerSet:
 }
 
 function displayQuestion() {
+    questionTitle.textContent = questionSet.questions['1'].title;
+
 //     for (let i = 1; i = Object.keys(questionSet.questions).length; ++i) {
 //     questionTitle.textContent = "Hello"; //questionSet.questions.i.title.value;
 // }
@@ -98,6 +100,7 @@ startBtn.addEventListener('click', function() {
     }
     else if (gameState == true) {
         stopTimer();
+        startBtn.innerHTML = "Start Game";
     }
 })
 
