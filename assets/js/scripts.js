@@ -4,16 +4,28 @@ const countEl = document.querySelector("#count");
 const questionTitle = document.querySelector("#question_title");
 const questionText = document.querySelector("#question_text");
 const questionForm = document.querySelector("#question_form");
-const answerLabelA = document.querySelector("#answer_a_label")
-const answerLabelB = document.querySelector("#answer_b_label")
-const answerLabelC = document.querySelector("#answer_c_label")
-const answerLabelD = document.querySelector("#answer_d_label")
+const answerLabelA = document.querySelector("#answer_a_label");
+const answerLabelB = document.querySelector("#answer_b_label");
+const answerLabelC = document.querySelector("#answer_c_label");
+const answerLabelD = document.querySelector("#answer_d_label");
 let gameState = false;
+let questionNum = 0;
+let score = 0;
+let userAnswers = [];
 
 
 // Question and answer text provided by Xpert Learning Assitant
 const questionSet = {
     questions: {
+            0: {
+                title: "",
+                text: "",
+                a: "",
+                b: "",
+                c: "",
+                d: ""
+            },
+
             1: {
                 title: "Question 1",
                 text:  "What is the correct way to declare a variable in JavaScript?",
@@ -65,30 +77,49 @@ answerSet:
 
 
 function displayQuestion() {
-    for (let questionId in questionSet.questions) {
-        questionTitle.textContent = questionSet.questions[questionId].title;
-        questionText.textContent = questionSet.questions[questionId].text;
-        answerLabelA.textContent = questionSet.questions[questionId].a;
-        answerLabelB.textContent = questionSet.questions[questionId].b;
-        answerLabelC.textContent = questionSet.questions[questionId].c;
-        answerLabelD.textContent = questionSet.questions[questionId].d;
+    ++questionNum;
+    // following line is from Xpert
+    if (!(questionNum in questionSet.questions)) {
+        console.log("End of questions");
+        stopTimer();
+    }
+    else {
+        questionTitle.textContent = questionSet.questions[questionNum].title;
+        questionText.textContent = questionSet.questions[questionNum].text;
+        answerLabelA.textContent = questionSet.questions[questionNum].a;
+        answerLabelB.textContent = questionSet.questions[questionNum].b;
+        answerLabelC.textContent = questionSet.questions[questionNum].c;
+        answerLabelD.textContent = questionSet.questions[questionNum].d;
     }
 }
 
+function clearQuestion() {
+    questionTitle.textContent = '';
+    questionText.textContent = '';
+    answerLabelA.textContent = '';
+    answerLabelB.textContent = '';
+    answerLabelC.textContent = '';
+    answerLabelD.textContent = '';
+}
 
-function displayCount(current_count) {
-    countEl.innerHTML = current_count; 
+
+function displayTime(current_time) {
+    countEl.innerHTML = current_time; 
 }
 
 
 function startTimer() {
-    let count = 100;
+    gameState = true;
+    questionNum = 0;
+    let time_left = 100;
+    startBtn.innerHTML = "Stop Game"; // change button to say Stop Game
     intervalId = setInterval(
         function() {
-            displayCount(count);
-            --count;
+            displayTime(time_left);
+            --time_left;
         },
     1000);
+    displayQuestion();
 }
 
 
@@ -96,27 +127,30 @@ function stopTimer() {
     gameState = false;
     clearInterval(intervalId); 
     let count = 0;
-    displayCount(count);
+    displayTime(count);
+    clearQuestion()
+    startBtn.innerHTML = "Start Game";
 }
 
-
+// Start button, on click runs startTimner if the game state is false, otherwise it 
+// runs stopTimer if game state is true.
 startBtn.addEventListener('click', function(event_this) {
     event_this.stopPropagation();
-    // event_this.preventDefault();
+    event_this.preventDefault();
     if (gameState == false) {
-        gameState = true;
         startTimer(); // starts the timer
-        startBtn.innerHTML = "Stop Game"; // change button to say Stop Game
-        displayQuestion();
     }
     else if (gameState == true) {
         stopTimer();
-        startBtn.innerHTML = "Start Game";
     }
 })
 
+// Submit button, it runs displayQuestion and stores user input.
 submitBtn.addEventListener('click', function (event) {
     event.stopPropagation();
     event.preventDefault();
-    alert("It works");
+    let selectedRadioButton = document.querySelector('input[name="answers"]:checked')
+    let selectedValue = selectedRadioButton.value;
+    userAnswers.push(selectedValue);
+    displayQuestion();
 })
