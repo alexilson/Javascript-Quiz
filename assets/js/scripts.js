@@ -121,6 +121,9 @@ function startTimer() {
     startBtn.innerHTML = "Stop Game"; // change button to say Stop Game
     intervalId = setInterval(
         function() {
+            if (time_left == 0) {
+                stopTimer();
+            }
             displayTime(time_left);
             --time_left;
         },
@@ -137,6 +140,7 @@ function stopTimer() {
     clearQuestion()
     startBtn.innerHTML = "Start Game";
     scoreEl.innerHTML = "Your score is: " + score;
+    // let userName = input("Enter your name");
 }
 
 // Start button, on click runs startTimner if the game state is false, otherwise it 
