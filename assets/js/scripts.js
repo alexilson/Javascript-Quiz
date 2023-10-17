@@ -8,6 +8,7 @@ const answerLabelA = document.querySelector("#answer_a_label");
 const answerLabelB = document.querySelector("#answer_b_label");
 const answerLabelC = document.querySelector("#answer_c_label");
 const answerLabelD = document.querySelector("#answer_d_label");
+const scoreEl = document.querySelector("#score");
 let gameState = false;
 let questionNum = 0;
 let score = 0;
@@ -70,20 +71,21 @@ const questionSet = {
                 c: "c) To calculate the square root of a number",
                 d: "d) To make your computer emit a delicious smell"
             }
-},
-answerSet: 
-    ["a", "d", "a", "a", "a"]
+    },
+
+    answerSet: 
+    ["", "a", "d", "a", "a", "a"]
 }
 
-
+// Increments the question number, checks to see if question number is in the set, then 
+// displays it if it's there, if not, it ends the game.
 function displayQuestion() {
-    ++questionNum;
+    ++questionNum; // advance to next question number
     // following line is from Xpert
-    if (!(questionNum in questionSet.questions)) {
-        console.log("End of questions");
+    if (!(questionNum in questionSet.questions)) {  // if the question number isn't in the question set, end the game
         stopTimer();
     }
-    else {
+    else { // otherwise, display the question title/text/answers
         questionTitle.textContent = questionSet.questions[questionNum].title;
         questionText.textContent = questionSet.questions[questionNum].text;
         answerLabelA.textContent = questionSet.questions[questionNum].a;
@@ -93,6 +95,7 @@ function displayQuestion() {
     }
 }
 
+// clears out any text on the questions
 function clearQuestion() {
     questionTitle.textContent = '';
     questionText.textContent = '';
@@ -103,15 +106,18 @@ function clearQuestion() {
 }
 
 
+// puts the time on the screen
 function displayTime(current_time) {
     countEl.innerHTML = current_time; 
 }
 
 
+// Starts the timer and the game
 function startTimer() {
     gameState = true;
     questionNum = 0;
     let time_left = 100;
+    scoreEl.innerHTML = "Your score is: ";
     startBtn.innerHTML = "Stop Game"; // change button to say Stop Game
     intervalId = setInterval(
         function() {
@@ -122,7 +128,7 @@ function startTimer() {
     displayQuestion();
 }
 
-
+// Stops the timer after the last question or if Stop Game is pressed
 function stopTimer() {
     gameState = false;
     clearInterval(intervalId); 
@@ -130,6 +136,7 @@ function stopTimer() {
     displayTime(count);
     clearQuestion()
     startBtn.innerHTML = "Start Game";
+    scoreEl.innerHTML = "Your score is: " + score;
 }
 
 // Start button, on click runs startTimner if the game state is false, otherwise it 
@@ -149,8 +156,15 @@ startBtn.addEventListener('click', function(event_this) {
 submitBtn.addEventListener('click', function (event) {
     event.stopPropagation();
     event.preventDefault();
-    let selectedRadioButton = document.querySelector('input[name="answers"]:checked')
-    let selectedValue = selectedRadioButton.value;
-    userAnswers.push(selectedValue);
+    let selectedRadioButton = document.querySelector('input[name="answers"]:checked') // get selected radio button
+    let selectedValue = selectedRadioButton.value; // assign the value of that radio button to a variable to check and store
+    userAnswers.push(selectedValue); // add user's input to the answer array
+    if (selectedValue == questionSet.answerSet[questionNum]) {
+        console.log("Right answer");
+        ++score;
+    }
+    else {
+        console.log("Wrong answer")
+    }
     displayQuestion();
 })
