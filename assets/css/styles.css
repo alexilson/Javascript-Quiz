@@ -1,11 +1,29 @@
 body {
     color: forestgreen;
     background-color: black;
-    /* display: flex;
-    position:relative; 
-    align-items: center; */
+    display: flex;
+    position: static; 
+    align-items: center;
+    flex-direction: column;
 }
 
 #quiz {
     display: none;
+    width: 25%;
+    height: 300px;
+}
+
+#quiz h3 {
+    height: 44px;
+}
+
+#start_button {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    width: 25%;
+}
+
+#button_area {
+    text-align: center;
+    padding-top: 20px;
 }

@@ -124,12 +124,21 @@ function displayResponse(response) {
 
 // display the high scores saved in local storage
 function displayHighScores() {
-    highScoresEl.innerHTML = "";  // reset score list
+
+    // reset score list
+    highScoresEl.innerHTML = "";
+
+    // add High Scores title
+    var title = document.createElement("h2");
+    title.textContent = "High Scores";
+    highScoresEl.appendChild(title);
+
+    // render each score and add it a list item
     for (var i = 0; i < highScores.length; ++i) {
         var score = highScores[i];
 
         var li = document.createElement("li");
-        li.textContent = score["name"] + " -- " + score["score"];
+        li.textContent = score["score"] + " -- " + score["name"];
 
         highScoresEl.appendChild(li);
     }
