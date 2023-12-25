@@ -141,8 +141,8 @@ function startTimer() {
 function stopTimer() {
     gameState = false;
     clearInterval(intervalId); 
-    let count = 0;
-    displayTime(count);
+    // let count = 0;
+    displayTime(time_left);
     clearQuestion()
     startBtn.innerHTML = "Start Game";
     scoreEl.innerHTML = "Your score is: " + score;
