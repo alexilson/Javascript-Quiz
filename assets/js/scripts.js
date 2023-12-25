@@ -9,10 +9,12 @@ const answerLabelB = document.querySelector("#answer_b_label");
 const answerLabelC = document.querySelector("#answer_c_label");
 const answerLabelD = document.querySelector("#answer_d_label");
 const scoreEl = document.querySelector("#score");
+const responseEl = document.querySelector("#response")
 let gameState = false;
 let questionNum = 0;
 let score = 0;
 let userAnswers = [];
+let time_left = 100;
 
 
 // Question and answer text provided by Xpert Learning Assitant
@@ -111,17 +113,21 @@ function displayTime(current_time) {
     countEl.innerHTML = current_time; 
 }
 
+function displayResponse(response) {
+    responseEl.innerHTML = response;
+}
+
 
 // Starts the timer and the game
 function startTimer() {
     gameState = true;
     questionNum = 0;
-    let time_left = 100;
+    time_left = 100;
     scoreEl.innerHTML = "Your score is: ";
     startBtn.innerHTML = "Stop Game"; // change button to say Stop Game
     intervalId = setInterval(
         function() {
-            if (time_left == 0) {
+            if (time_left <= 0) {
                 stopTimer();
             }
             displayTime(time_left);
@@ -164,11 +170,12 @@ submitBtn.addEventListener('click', function (event) {
     let selectedValue = selectedRadioButton.value; // assign the value of that radio button to a variable to check and store
     userAnswers.push(selectedValue); // add user's input to the answer array
     if (selectedValue == questionSet.answerSet[questionNum]) {
-        console.log("Right answer");
+        displayResponse("Right answer! Next question.")
         ++score;
     }
     else {
-        console.log("Wrong answer")
+        displayResponse("Wrong answer! Lose 25 seconds.")
+        time_left = time_left - 25;
     }
     displayQuestion();
 })
