@@ -6,3 +6,6 @@ body {
     align-items: center; */
 }
 
+#quiz {
+    display: none;
+}
