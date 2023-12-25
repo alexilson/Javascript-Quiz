@@ -35,4 +35,4 @@ For additional questions, please contact me here:
 
 GitHub: https://www.github.com/alexilson
 
-Email: mailto:ilson.alex@gmail.com
+Email: ilson.alex@gmail.com
